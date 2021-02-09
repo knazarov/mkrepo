@@ -303,7 +303,7 @@ def update_repo(storage, sign, tempdir):
                 package_lists[(dist, component, arch)] = package_list
 
     mtimes = {}
-    for package_list in package_lists.itervalues():
+    for package_list in package_lists.values():
         for package in package_list.packages:
             if 'FileTime' in package.fields:
                 mtimes[package['Filename'].lstrip(
@@ -364,7 +364,7 @@ def update_repo(storage, sign, tempdir):
     components = collections.defaultdict(set)
     architectures = collections.defaultdict(set)
 
-    for key in package_lists.iterkeys():
+    for key in package_lists:
         dist, component, arch = key
         subdir = 'source' if arch == 'source' else 'binary-%s' % arch
 
@@ -413,7 +413,7 @@ def update_repo(storage, sign, tempdir):
 
         checksum_lines = collections.defaultdict(list)
         checksum_names = {'md5': 'MD5Sum', 'sha1': 'SHA1', 'sha256': 'SHA256'}
-        for checksum_key, checksum_value in checksums[dist].iteritems():
+        for checksum_key, checksum_value in checksums[dist].items():
             checksum_type, path = checksum_key
 
             file_size = sizes[dist][path]
